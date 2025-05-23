@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Book List</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f5f8fa;
+            margin: 20px;
+            direction: ltr;
+            color: #2c3e50;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-weight: 700;
+            font-size: 30px;
+            color: #34495e;
+        }
+        a.add-book {
+            display: inline-block;
+            margin-bottom: 20px;
+            background-color: #2980b9;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+        a.add-book:hover {
+            background-color: #1f5f8b;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        thead {
+            background-color: #2980b9;
+            color: white;
+        }
+        th, td {
+            padding: 14px 20px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            font-size: 16px;
+        }
+        tbody tr:hover {
+            background-color: #f1f7fc;
+        }
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        button, a.edit-button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        a.edit-button {
+            background-color: #f39c12;
+        }
+        button:hover {
+            background-color: #219150;
+        }
+        a.edit-button:hover {
+            background-color: #d68910;
+        }
+        span.unavailable {
+            color: #c0392b;
+            font-weight: 600;
+        }
+        a.back-home {
+            display: inline-block;
+            margin-top: 25px;
+            text-decoration: none;
+            color: #2980b9;
+            font-weight: 700;
+            font-size: 18px;
+            transition: color 0.3s ease;
+            text-align: center;
+            width: 100%;
+        }
+        a.back-home:hover {
+            color: #1f5f8b;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Book List</h2>
+
+<!-- Link to add a new book -->
+<a th:href="@{/books/add}" class="add-book">Add New Book</a>
+
+<table>
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Available Copies</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book : ${books}">
+        <td th:text="${book.title}"></td>
+        <td th:text="${book.author}"></td>
+        <td th:text="${book.availableCopies}"></td>
+        <td class="action-buttons">
+            <!-- Borrow button shown only if copies are available -->
+            <form th:action="@{'/borrow/borrow-book/' + ${book.id}}" method="post" th:if="${book.availableCopies > 0}">
+                <button type="submit">Borrow</button>
+            </form>
+            <!-- Message if no copies are available -->
+            <span th:if="${book.availableCopies == 0}" class="unavailable">Unavailable</span>
+            <!-- Edit button -->
+            <a th:href="@{'/books/edit/' + ${book.id}}" class="edit-button">Edit</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div style="text-align: center;">
+    <a th:href="@{/error}" class="back-home">Back to Home</a>
+</div>
+
+</body>
+</html>

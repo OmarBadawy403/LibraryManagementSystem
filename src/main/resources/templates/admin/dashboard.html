@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Admin Dashboard</title>
+    <style>
+        /* Import Cairo font for modern, clean style */
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+        /* Basic reset and body styling */
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0;
+            direction: ltr;
+            color: #2c3e50;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        /* Fade in effect */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Header style */
+        h2 {
+            text-align: center;
+            margin: 40px 0 20px;
+            font-size: 32px;
+            font-weight: 700;
+            color: #34495e;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        /* Navigation bar styling */
+        nav {
+            width: fit-content;
+            margin: 0 auto 40px;
+            background-color: #2980b9;
+            padding: 15px 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(41, 128, 185, 0.3);
+            animation: slideInDown 1s ease forwards;
+        }
+
+        /* Slide down animation for nav */
+        @keyframes slideInDown {
+            from { opacity: 0; transform: translateY(-40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Navigation links styling */
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            margin: 0 18px;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        /* Hover effect on navigation links */
+        nav a:hover {
+            color: #f1c40f;
+            transform: scale(1.1);
+        }
+
+        /* Content container styling */
+        .content {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 20px;
+            color: #555;
+            padding: 20px 30px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            animation: fadeIn 1.5s ease forwards;
+        }
+
+    </style>
+</head>
+<body>
+
+<h2>Admin Dashboard</h2>
+
+<nav>
+    <a th:href="@{/books}">Manage Books</a> |
+    <a th:href="@{/borrow/my-borrows}">Borrowed Books</a> |
+    <a th:href="@{/logout}">Logout</a>
+</nav>
+
+<div class="content">
+    <p>Welcome to the admin dashboard.</p>
+</div>
+
+</body>
+</html>

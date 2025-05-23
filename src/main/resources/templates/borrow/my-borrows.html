@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Borrowed Books</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f9fbfd;
+            margin: 20px;
+            direction: ltr;
+            color: #2c3e50;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+            font-size: 30px;
+            color: #34495e;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        thead {
+            background-color: #2980b9;
+            color: white;
+        }
+
+        th, td {
+            padding: 14px 20px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        tbody tr:hover {
+            background-color: #f1f7fc;
+        }
+
+        button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #219150;
+        }
+
+        span {
+            color: #7f8c8d;
+            font-weight: 600;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 25px;
+            text-decoration: none;
+            color: #2980b9;
+            font-weight: 700;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #1f5f8b;
+        }
+
+    </style>
+</head>
+<body>
+
+<h2>Borrowed Books</h2>
+
+<table>
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Borrow Date</th>
+        <th>Return Date</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="borrow : ${borrows}">
+        <td th:text="${borrow.book.title}"></td>
+        <td th:text="${#dates.format(borrow.borrowDate, 'yyyy-MM-dd')}"></td>
+        <td th:text="${borrow.returnDate != null ? #dates.format(borrow.returnDate, 'yyyy-MM-dd') : '-'}"></td>
+        <td th:text="${borrow.status}"></td>
+        <td>
+            <!-- Show return button only if the book is currently borrowed -->
+            <form th:action="@{'/borrow/return-book/' + ${borrow.id}}" method="post" th:if="${borrow.status == 'BORROWED'}">
+                <button type="submit">Return</button>
+            </form>
+            <!-- Show returned message if the book is already returned -->
+            <span th:if="${borrow.status != 'BORROWED'}">Returned</span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div style="text-align: center;">
+    <a th:href="@{/error}">Back to Home</a>
+</div>
+
+</body>
+</html>
