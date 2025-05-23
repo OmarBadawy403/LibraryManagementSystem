@@ -1,0 +1,2 @@
+# LibraryManagementSystem
+Library management system built with Spring Boot featuring user authentication and authorization with two roles: Admin and User. Includes password encryption, advanced management of books and members, and a user-friendly web interface using Thymeleaf.
